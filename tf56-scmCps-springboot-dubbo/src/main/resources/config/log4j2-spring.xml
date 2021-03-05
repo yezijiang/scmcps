@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn">
+    <Appenders>
+        <Console name="console">
+            <PatternLayout>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p %t %c.%M - %X{logPre} - %m%n</pattern>
+            </PatternLayout>
+            <!--排查一下，有日志无法打印，看看是否是这个造成的，modified by yeliming on 2018-11-27T11:19:01+08:00-->
+            <!--<Filters>-->
+            <!--&lt;!&ndash;<ThresholdFilter level="info" onMatch="NEUTRAL" onMismatch="DENY"/>&ndash;&gt;-->
+            <!--<KeywordsFilter fileName="Keywords.properties" onMatch="ACCEPT" onMismatch="DENY"/>-->
+            <!--</Filters>-->
+        </Console>
+        <File name="file" filename="/httx/logs/out.log">
+            <PatternLayout>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p %t %c.%M - %X{logPre} - %m%n</pattern>
+            </PatternLayout>
+            <!--排查一下，有日志无法打印，看看是否是这个造成的，modified by yeliming on 2018-11-27T11:19:01+08:00-->
+            <!--<Filters>-->
+            <!--&lt;!&ndash;<ThresholdFilter level="info" onMatch="NEUTRAL" onMismatch="DENY"/>&ndash;&gt;-->
+            <!--<KeywordsFilter fileName="Keywords.properties" onMatch="ACCEPT" onMismatch="DENY"/>-->
+            <!--</Filters>-->
+        </File>
+    </Appenders>
+    <Loggers>
+
+        <!--out.log打印com.tf56路径下的日志-->
+        <Logger name="com.tf56" level="info">
+            <AppenderRef ref="file"/>
+        </Logger>
+
+        <Root level="info">
+            <AppenderRef ref="console" />
+            <!--removed by yeliming on 2018-12-03T18:54:41+08:00-->
+            <!--<AppenderRef ref="file"></AppenderRef>-->
+        </Root>
+
+        <Logger name="org.springframework" level="warn"/>
+        <Logger name="org.apache.commons.beanutils" level="warn"/>
+        <Logger name="org.dozer" level="info">
+            <AppenderRef ref="console" />
+        </Logger>
+        <Logger name="org.apache.zookeeper" level="info">
+            <AppenderRef ref="console" />
+        </Logger>
+        <Logger name="com.alibaba.dubbo.registry" level="info">
+            <AppenderRef ref="console" />
+        </Logger>
+        <Logger name="com.alibaba.rocketmq" level="info">
+            <AppenderRef ref="console" />
+        </Logger>
+        <Logger name="com.alibaba.rocketmq" level="info">
+            <AppenderRef ref="file" />
+        </Logger>
+    </Loggers>
+</Configuration>

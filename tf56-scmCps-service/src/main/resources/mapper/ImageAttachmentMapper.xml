@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tf56.cps.mapper.ImageAttachmentMapper">
+    <resultMap id="BaseResultMap" type="com.tf56.cps.domain.ImageAttachmentDO">
+        <!--@mbg.generated-->
+        <!--@Table cps_image_attachment-->
+        <id column="image_attachment_id" jdbcType="BIGINT" property="imageAttachmentId"/>
+        <result column="supplier_code" jdbcType="VARCHAR" property="supplierCode"/>
+        <result column="image_source" jdbcType="VARCHAR" property="imageSource"/>
+        <result column="image_type" jdbcType="VARCHAR" property="imageType"/>
+        <result column="image_url" jdbcType="VARCHAR" property="imageUrl"/>
+        <result column="create_operator_id" jdbcType="BIGINT" property="createOperatorId"/>
+        <result column="create_operator" jdbcType="VARCHAR" property="createOperator"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="modify_operator_id" jdbcType="BIGINT" property="modifyOperatorId"/>
+        <result column="modify_operator" jdbcType="VARCHAR" property="modifyOperator"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        image_attachment_id, supplier_code, image_source, image_type, image_url, create_operator_id,
+        create_operator, gmt_create, modify_operator_id, modify_operator, gmt_modified, is_deleted
+    </sql>
+
+    <insert id="insert" keyColumn="image_attachment_id" keyProperty="imageAttachmentId"
+            parameterType="com.tf56.cps.domain.ImageAttachmentDO" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into cps_image_attachment (supplier_code, image_source, image_type,
+                                          image_url, create_operator_id, create_operator,
+                                          gmt_create, modify_operator_id, modify_operator,
+                                          gmt_modified, is_deleted)
+        values (#{supplierCode,jdbcType=VARCHAR}, #{imageSource,jdbcType=VARCHAR}, #{imageType,jdbcType=VARCHAR},
+                #{imageUrl,jdbcType=VARCHAR}, #{createOperatorId,jdbcType=BIGINT}, #{createOperator,jdbcType=VARCHAR},
+                #{gmtCreate,jdbcType=TIMESTAMP}, #{modifyOperatorId,jdbcType=BIGINT},
+                #{modifyOperator,jdbcType=VARCHAR},
+                #{gmtModified,jdbcType=TIMESTAMP}, 0)
+    </insert>
+
+    <insert id="batchInsert" keyColumn="image_attachment_id" keyProperty="imageAttachmentId" parameterType="map"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into cps_image_attachment
+                (supplier_code, image_source, image_type, image_url, create_operator_id, create_operator,
+                 gmt_create, modify_operator_id, modify_operator, gmt_modified, is_deleted)
+                values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.supplierCode,jdbcType=VARCHAR}, #{item.imageSource,jdbcType=VARCHAR},
+             #{item.imageType,jdbcType=VARCHAR},
+             #{item.imageUrl,jdbcType=VARCHAR}, #{item.createOperatorId,jdbcType=BIGINT},
+             #{item.createOperator,jdbcType=VARCHAR},
+             #{item.gmtCreate,jdbcType=TIMESTAMP}, #{item.modifyOperatorId,jdbcType=BIGINT},
+             #{item.modifyOperator,jdbcType=VARCHAR}, #{item.gmtModified,jdbcType=TIMESTAMP},
+             0)
+        </foreach>
+    </insert>
+
+    <select id="queryImageAttachmentList" resultMap="BaseResultMap"
+            parameterType="com.tf56.cps.api.qto.ImageAttachmentQTO">
+        select <include refid="Base_Column_List" />
+        from cps_image_attachment
+        <where>
+            is_deleted = 0
+            <choose>
+                <when test="supplierCode != null">
+                    and supplier_code = #{supplierCode,jdbcType=VARCHAR}
+                </when>
+                <otherwise>
+                    and image_attachment_id = #{imageAttachmentId}
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <update id="delete" parameterType="com.tf56.cps.domain.ImageAttachmentDO">
+        update cps_image_attachment
+        <set>
+            is_deleted = 1,
+            <if test="modifyOperatorId != null">
+                modify_operator_id = #{modifyOperatorId},
+            </if>
+            <if test="modifyOperator != null and modifyOperator != ''">
+                modify_operator = #{modifyOperator},
+            </if>
+        </set>
+        <where>
+            is_deleted = 0
+            and image_attachment_id = #{imageAttachmentId}
+        </where>
+    </update>
+</mapper>

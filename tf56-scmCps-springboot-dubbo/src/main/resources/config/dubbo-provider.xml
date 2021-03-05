@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd  
+            http://code.alibabatech.com/schema/dubbo  
+            http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- 服务提供方应用名 -->
+    <dubbo:application name="tf56-scmCps-provider"/>
+
+    <!-- 使用zookeeper注册中心暴露服务地址 -->
+    <dubbo:registry protocol="zookeeper" address="${dubbo.service.registry.zk.address}"/>
+    <!-- 当ProtocolConfig和ServiceConfig某属性没有配置时,采用此缺省值 -->
+    <dubbo:protocol name="dubbo" port="20880"/>
+
+    <!--modified by yeliming on 2020-06-04 11:11:44 去除BizExceptionFilter-->
+    <dubbo:provider timeout="30000" threadpool="fixed"
+                    threads="100" accepts="1000" filter="-BizExceptionFilter"/>
+
+    <dubbo:service interface="com.tf56.cps.api.ImageAttachmentService"
+                   ref="imageAttachmentService"
+                   version="${dubbo.service.version}"/>
+
+</beans>

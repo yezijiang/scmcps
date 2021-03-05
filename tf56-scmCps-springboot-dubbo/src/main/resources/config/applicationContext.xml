@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tf56framework="http://www.tf56.com/schema/tf56framework"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.tf56.com/schema/tf56framework
+       http://www.tf56.com/schema/tf56framework.xsd">
+
+    <!--    开启堆栈打印-->
+    <tf56framework:dubbo fillInStackTrace="true"/>
+    <!--使用spring boot的方式加载日志-->
+    <import resource="classpath*:config/dubbo-provider.xml"/>
+    <import resource="classpath*:config/dubbo-consumer.xml"/>
+
+
+</beans>
