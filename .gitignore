@@ -1,0 +1,5 @@
+/.idea/
+/tf56-scmCps-api/target/
+/tf56-scmCps-common/target/
+/tf56-scmCps-service/target/
+/tf56-scmCps-springboot-dubbo/target/
